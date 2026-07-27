@@ -1,0 +1,10 @@
+{
+	"$schema": "node_modules/wrangler/config-schema.json",
+	"name": "curb-fund",
+	"compatibility_date": "2026-07-27",
+	// Assets-only Worker: serve the static Astro build in dist/.
+	// No "main" entry = no server code, equivalent to a static Pages site.
+	"assets": {
+		"directory": "./dist"
+	}
+}

@@ -1,0 +1,158 @@
+---
+import "../styles/global.css";
+
+interface Props {
+	/** <title> text. Also drives the browser tab + share previews. */
+	title?: string;
+	/** Meta description for SEO / social. */
+	description?: string;
+}
+
+const {
+	title = "The Curb Fund",
+	description = "The Curb Fund — grassroots giving to vetted local urbanist organizations. Every donation is tax-deductible through Every.org.",
+} = Astro.props;
+
+const navLinks = [
+	{ href: "/how-it-works", label: "How it works" },
+	{ href: "/organizations", label: "Organizations" },
+	{ href: "/transparency", label: "Transparency" },
+];
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link rel="icon" href="/favicon.ico" />
+		<meta name="generator" content={Astro.generator} />
+
+		<title>{title}</title>
+		<meta name="description" content={description} />
+
+		<!-- Fonts: DM Serif Display (headings) + DM Sans (body) -->
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&family=DM+Serif+Display:ital@0;1&display=swap"
+			rel="stylesheet"
+		/>
+
+		<!-- Per-page <head> extras (canonical, OG tags, etc.) go here -->
+		<slot name="head" />
+	</head>
+
+	<body>
+		<a class="skip-link" href="#main">Skip to content</a>
+
+		<header class="site-header">
+			<div class="container site-header__inner">
+				<a class="wordmark" href="/">The Curb Fund</a>
+
+				<nav class="site-nav" aria-label="Primary">
+					<ul class="site-nav__links">
+						{
+							navLinks.map((item) => (
+								<li>
+									<a href={item.href}>{item.label}</a>
+								</li>
+							))
+						}
+					</ul>
+					<a class="btn btn--give" href="#donate">Give</a>
+				</nav>
+			</div>
+		</header>
+
+		<slot />
+
+		<footer class="site-footer">
+			<div class="container">
+				<p>
+					© The Curb Fund · Fiscal sponsor: Every.org · All donations
+					tax-deductible
+				</p>
+			</div>
+		</footer>
+	</body>
+</html>
+
+<style>
+	/* ---- Sticky header ---------------------------------------------------- */
+	.site-header {
+		position: sticky;
+		top: 0;
+		z-index: 50;
+		/* translucent paper so content scrolls softly beneath */
+		background: color-mix(in srgb, var(--color-bg) 85%, transparent);
+		backdrop-filter: saturate(1.15) blur(8px);
+		border-bottom: 1px solid var(--color-line);
+	}
+
+	.site-header__inner {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 1.5rem;
+		min-height: var(--header-h);
+	}
+
+	.wordmark {
+		font-family: var(--font-serif);
+		font-size: 1.4rem;
+		letter-spacing: var(--tracking-tight);
+		color: var(--color-ink);
+		text-decoration: none;
+		white-space: nowrap;
+	}
+
+	/* ---- Nav -------------------------------------------------------------- */
+	.site-nav {
+		display: flex;
+		align-items: center;
+		gap: clamp(1rem, 3vw, 2rem);
+	}
+
+	.site-nav__links {
+		display: flex;
+		align-items: center;
+		gap: clamp(1rem, 3vw, 1.75rem);
+		margin: 0;
+		padding: 0;
+		list-style: none;
+	}
+
+	.site-nav__links a {
+		font-size: 0.95rem;
+		font-weight: 500;
+		color: var(--color-ink);
+		text-decoration: none;
+		transition: color 120ms ease;
+	}
+
+	.site-nav__links a:hover {
+		color: var(--color-accent);
+	}
+
+	/* Shell only: hide inline links on narrow screens.
+	   TODO: add a real mobile menu when pages are built. */
+	@media (max-width: 620px) {
+		.site-nav__links {
+			display: none;
+		}
+	}
+
+	/* ---- Footer ----------------------------------------------------------- */
+	.site-footer {
+		border-top: 1px solid var(--color-line);
+		padding-block: 2rem;
+		color: var(--color-muted);
+		font-size: var(--text-sm);
+	}
+
+	.site-footer p {
+		max-width: none;
+	}
+</style>

@@ -232,3 +232,80 @@ a {
 		transition-duration: 0.01ms !important;
 	}
 }
+
+/* =========================================================================
+   Shared page primitives (inner pages; homepage keeps its own scoped copies)
+   ========================================================================= */
+.section {
+	padding-block: clamp(3.5rem, 8vw, 6rem);
+}
+.section--tight {
+	padding-block: clamp(2.5rem, 6vw, 4rem);
+}
+.section--divide {
+	border-top: 1px solid var(--color-line);
+}
+
+.section__label {
+	font-size: var(--text-xl);
+	margin-bottom: 1.5rem;
+}
+
+.lead {
+	font-size: var(--text-lg);
+	color: var(--color-muted);
+	max-width: 60ch;
+}
+
+.text-link {
+	display: inline-block;
+	font-weight: 600;
+	color: var(--color-accent-strong);
+	text-decoration: none;
+}
+.text-link:hover {
+	text-decoration: underline;
+}
+
+/* Inner-page hero band */
+.page-hero {
+	padding-top: clamp(3rem, 9vw, 6rem);
+	padding-bottom: clamp(2rem, 5vw, 3rem);
+	border-bottom: 1px solid var(--color-line);
+}
+.page-hero__title {
+	margin-block: 0.4rem 1rem;
+}
+
+/* Readable prose column */
+.prose {
+	max-width: 64ch;
+}
+.prose > * + * {
+	margin-top: 1.1em;
+}
+.prose h2 {
+	margin-top: 2.4rem;
+}
+.prose h3 {
+	margin-top: 1.8rem;
+}
+
+/* Category tag (also used on the homepage org grid) */
+.tag {
+	display: inline-block;
+	font-size: 0.72rem;
+	font-weight: 600;
+	letter-spacing: var(--tracking-wide);
+	text-transform: uppercase;
+	padding: 0.28em 0.7em;
+	border: 1px solid var(--color-line);
+	border-radius: var(--radius-pill);
+	color: var(--color-muted);
+	white-space: nowrap;
+}
+.tag--local {
+	color: var(--color-accent-strong);
+	background: var(--color-accent-tint);
+	border-color: transparent;
+}

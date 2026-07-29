@@ -14,10 +14,15 @@ const {
 } = Astro.props;
 
 const navLinks = [
-	{ href: "/how-it-works", label: "How it works" },
 	{ href: "/organizations", label: "Organizations" },
 	{ href: "/transparency", label: "Transparency" },
+	{ href: "/faq", label: "FAQ" },
 ];
+
+// Trailing-slash-tolerant so it matches whether the built route is
+// "/organizations" or "/organizations/".
+const normalize = (p: string) => p.replace(/\/+$/, "") || "/";
+const currentPath = normalize(Astro.url.pathname);
 ---
 
 <!doctype html>
@@ -67,7 +72,14 @@ const navLinks = [
 						{
 							navLinks.map((item) => (
 								<li>
-									<a href={item.href}>{item.label}</a>
+									<a
+										href={item.href}
+										aria-current={
+											currentPath.includes(item.href) && "page"
+										}
+									>
+										{item.label}
+									</a>
 								</li>
 							))
 						}
@@ -138,13 +150,20 @@ const navLinks = [
 	.site-nav__links a {
 		font-size: 0.95rem;
 		font-weight: 500;
-		color: var(--color-ink);
+		/* inactive links sit back so the current page reads as active */
+		color: var(--color-muted);
 		text-decoration: none;
 		transition: color 120ms ease;
 	}
 
 	.site-nav__links a:hover {
 		color: var(--color-accent);
+	}
+
+	/* Current page: darker + heavier than its muted siblings. */
+	.site-nav__links a[aria-current="page"] {
+		color: var(--color-ink);
+		font-weight: 600;
 	}
 
 	/* Shell only: hide inline links on narrow screens.

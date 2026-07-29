@@ -161,10 +161,20 @@ const steps = [
 		function mountCurbFundWidget() {
 			const mount = document.getElementById("every-donate-btn");
 			if (!mount || !window.everyDotOrgDonateButton) return;
+
+			// Swap the no-JS fallback link for a real trigger button, so clicking
+			// opens the modal instead of navigating away to Every.org.
+			mount.innerHTML =
+				'<button type="button" id="every-donate-trigger" class="btn btn--give">Donate now</button>';
 			
 			window.everyDotOrgDonateButton.createWidget({
         label: 'Donate now',
-				selector: "#every-donate-btn",
+				selector: "#every-donate-trigger",
+				// Unique open-anchor. It must NOT equal the page's own #donate id:
+				// Every.org reads this anchor from the URL as "keep the modal open,"
+				// so when it collided with our #donate section, clicking X just
+				// re-opened it. This decoupling is the actual fix.
+				openAt: "every-donate",
         nonprofitSlug: 'special-fundraiser',
 				fundraiserSlug: "the-curb-fund",
 				defaultFrequency: "monthly",
@@ -180,7 +190,6 @@ const steps = [
 			mountCurbFundWidget();
 		} else {
 			const script = document.getElementById("every-donate-btn-js");
-      console.log({script})
 			if (script) script.addEventListener("load", mountCurbFundWidget);
 		}
 	})();

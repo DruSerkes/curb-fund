@@ -40,6 +40,15 @@ const navLinks = [
 			rel="stylesheet"
 		/>
 
+		<!-- Every.org donate embed. ?explicit=1 = don't auto-scan the DOM;
+		     each page mounts its own widget/button on load (see index.astro). -->
+		<script
+			is:inline
+			async
+			defer
+			src="https://embeds.every.org/0.4/button.js?explicit=1"
+			id="every-donate-btn-js"></script>
+
 		<!-- Per-page <head> extras (canonical, OG tags, etc.) go here -->
 		<slot name="head" />
 	</head>

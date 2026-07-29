@@ -9,13 +9,14 @@ const orgs = [
 		tag: "National",
 		local: false,
 	},
-	{
-		name: "Parking Reform Network",
-		blurb:
-			"Ending the parking minimum regime that has consumed our cities.",
-		tag: "National",
-		local: false,
-	},
+  // TODO: Get these guys on board 
+	// {
+	// 	name: "Parking Reform Network",
+	// 	blurb:
+	// 		"Ending the parking minimum regime that has consumed our cities.",
+	// 	tag: "National",
+	// 	local: false,
+	// },
 	{
 		name: "Strong Towns",
 		blurb:
@@ -24,12 +25,18 @@ const orgs = [
 		local: false,
 	},
 	{
-		name: "Local org",
+		name: "Transportation Alternatives",
 		blurb:
-			"A portion goes to a regional urbanist group relevant to your city.",
-		tag: "Local match",
+			"Advocating for sustainable transportation options and equitable urban planning in NYC.",
+		tag: "Local",
 		local: true,
 	},
+  {
+    name: "Yes In My Back Yard (YIMBY Action)",
+    blurb: "Fighting for affordable housing and smart growth in California.",
+    tag: "Local",
+    local: true
+  }
 ];
 
 const steps = [
@@ -52,10 +59,13 @@ const steps = [
 					Your city deserves better than this.
 				</h1>
 				<p class="hero__subhead lead">
-					Donate once. We distribute your contribution across the
+					Donate once. 
+          <br />
+          We distribute your contribution across the
 					organizations fighting for better transit, human-scale
-					urbanism, and parking reform — equitably, transparently,
-					quarterly.
+					urbanism, parking reform, and access to housing. 
+          <br />
+          <!-- Equitably. Transparently. Quarterly. -->
 				</p>
 				<div class="hero__ctas">
 					<a class="btn btn--give" href="#donate">Give monthly</a>
@@ -120,17 +130,20 @@ const steps = [
 			<div class="container donate__inner">
 				<h2 id="donate-heading">Ready to fund the movement?</h2>
 				<p class="donate__subhead lead">
-					Every dollar reaches the orgs. We take nothing.
+					Every dollar goes to charity. We take nothing.
 				</p>
 
 				<div class="donate__widget">
-					<!-- Every.org widget mounts here — see Unit 4 -->
-					<div id="every-donate-btn"></div>
-					<a
-						class="btn btn--give"
-						href="https://www.every.org/thecurbfund#/donate"
-						>Donate via Every.org</a
-					>
+					<!-- The Every.org widget mounts into this element on load.
+					     The <a> is the no-JS fallback; the mount script clears
+					     it before injecting the widget so they never both show. -->
+					<div id="every-donate-btn">
+						<a
+							class="btn btn--give"
+							href="https://www.every.org/the-curb-fund"
+							>Donate Now</a
+						>
+					</div>
 				</div>
 
 				<p class="donate__fineprint">
@@ -140,6 +153,38 @@ const steps = [
 		</section>
 	</main>
 </Base>
+
+<!-- Mount the Every.org donation widget. is:inline so it runs in place and can
+     see the global `everyDotOrgDonateButton` set by the async script in <head>. -->
+<script is:inline>
+	(function () {
+		function mountCurbFundWidget() {
+			const mount = document.getElementById("every-donate-btn");
+			if (!mount || !window.everyDotOrgDonateButton) return;
+			
+			window.everyDotOrgDonateButton.createWidget({
+        label: 'Donate now',
+				selector: "#every-donate-btn",
+        nonprofitSlug: 'special-fundraiser',
+				fundraiserSlug: "the-curb-fund",
+				defaultFrequency: "monthly",
+        noExit: false,
+				primaryColor: "#2f5d3a", // --color-accent
+				addAmounts: [10, 25, 50, 100],
+				completeDonationInNewTab: false,
+			});
+		}
+
+		// The button.js script is async; it may or may not have loaded yet.
+		if (window.everyDotOrgDonateButton) {
+			mountCurbFundWidget();
+		} else {
+			const script = document.getElementById("every-donate-btn-js");
+      console.log({script})
+			if (script) script.addEventListener("load", mountCurbFundWidget);
+		}
+	})();
+</script>
 
 <style>
 	/* ---- Section rhythm --------------------------------------------------- */

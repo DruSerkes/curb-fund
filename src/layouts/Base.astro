@@ -67,8 +67,8 @@ const currentPath = normalize(Astro.url.pathname);
 			<div class="container site-header__inner">
 				<a class="wordmark" href="/">The Curb Fund</a>
 
-				<nav class="site-nav" aria-label="Primary">
-					<ul class="site-nav__links">
+				<nav class="site-nav" aria-label="Primary" data-nav-open="false">
+					<ul class="site-nav__links" id="primary-nav-links">
 						{
 							navLinks.map((item) => (
 								<li>
@@ -85,6 +85,15 @@ const currentPath = normalize(Astro.url.pathname);
 						}
 					</ul>
 					<a class="btn btn--give" href="/#donate">Give</a>
+					<button
+						class="nav-toggle"
+						type="button"
+						aria-expanded="false"
+						aria-controls="primary-nav-links"
+						aria-label="Open menu"
+					>
+						<span class="nav-toggle__bars" aria-hidden="true"></span>
+					</button>
 				</nav>
 			</div>
 		</header>
@@ -166,11 +175,99 @@ const currentPath = normalize(Astro.url.pathname);
 		font-weight: 600;
 	}
 
-	/* Shell only: hide inline links on narrow screens.
-	   TODO: add a real mobile menu when pages are built. */
+	/* ---- Hamburger toggle (mobile only) ---------------------------------- */
+	.nav-toggle {
+		display: none; /* shown at the mobile breakpoint below */
+		align-items: center;
+		justify-content: center;
+		width: 44px;
+		height: 44px;
+		padding: 0;
+		background: transparent;
+		border: 1px solid var(--color-line);
+		border-radius: var(--radius);
+		color: var(--color-ink);
+		cursor: pointer;
+	}
+
+	/* three bars drawn from one span + its two pseudo-elements */
+	.nav-toggle__bars,
+	.nav-toggle__bars::before,
+	.nav-toggle__bars::after {
+		content: "";
+		display: block;
+		width: 20px;
+		height: 2px;
+		background: currentColor;
+		border-radius: 2px;
+		transition: transform 160ms ease, opacity 160ms ease;
+	}
+	.nav-toggle__bars {
+		position: relative;
+	}
+	.nav-toggle__bars::before {
+		position: absolute;
+		top: -6px;
+	}
+	.nav-toggle__bars::after {
+		position: absolute;
+		top: 6px;
+	}
+
+	/* open state: morph the bars into an X */
+	.nav-toggle[aria-expanded="true"] .nav-toggle__bars {
+		background: transparent;
+	}
+	.nav-toggle[aria-expanded="true"] .nav-toggle__bars::before {
+		transform: translateY(6px) rotate(45deg);
+	}
+	.nav-toggle[aria-expanded="true"] .nav-toggle__bars::after {
+		transform: translateY(-6px) rotate(-45deg);
+	}
+
+	/* ---- Mobile: collapse links into a dropdown panel -------------------- */
 	@media (max-width: 620px) {
+		.nav-toggle {
+			display: inline-flex;
+			order: 2; /* keep the hamburger to the right of the Give button */
+		}
+
 		.site-nav__links {
-			display: none;
+			/* drop down from just under the sticky header */
+			position: absolute;
+			top: 100%;
+			left: 0;
+			right: 0;
+			flex-direction: column;
+			align-items: stretch;
+			gap: 0;
+			padding: 0.25rem var(--container-pad) 1rem;
+			background: var(--color-bg);
+			border-bottom: 1px solid var(--color-line);
+			box-shadow: var(--shadow-md);
+
+			/* closed by default */
+			opacity: 0;
+			visibility: hidden;
+			transform: translateY(-0.5rem);
+			transition: opacity 160ms ease, transform 160ms ease,
+				visibility 160ms ease;
+		}
+
+		.site-nav[data-nav-open="true"] .site-nav__links {
+			opacity: 1;
+			visibility: visible;
+			transform: translateY(0);
+		}
+
+		.site-nav__links a {
+			display: block;
+			padding: 0.85rem 0;
+			font-size: 1.05rem;
+			border-top: 1px solid var(--color-line);
+		}
+		.site-nav__links li:first-child a {
+			border-top: 0;
 		}
 	}
 
@@ -186,3 +283,41 @@ const currentPath = normalize(Astro.url.pathname);
 		max-width: none;
 	}
 </style>
+
+<script>
+	// Mobile nav toggle. Module script (deferred), so the DOM is ready.
+	const nav = document.querySelector<HTMLElement>(".site-nav");
+	const toggle = document.querySelector<HTMLButtonElement>(".nav-toggle");
+
+	if (nav && toggle) {
+		const setOpen = (open: boolean) => {
+			nav.dataset.navOpen = String(open);
+			toggle.setAttribute("aria-expanded", String(open));
+			toggle.setAttribute("aria-label", open ? "Close menu" : "Open menu");
+		};
+
+		toggle.addEventListener("click", () => {
+			setOpen(nav.dataset.navOpen !== "true");
+		});
+
+		// Close after choosing a destination.
+		nav.querySelectorAll(".site-nav__links a").forEach((link) =>
+			link.addEventListener("click", () => setOpen(false))
+		);
+
+		// Close on Escape and return focus to the toggle.
+		document.addEventListener("keydown", (e) => {
+			if (e.key === "Escape" && nav.dataset.navOpen === "true") {
+				setOpen(false);
+				toggle.focus();
+			}
+		});
+
+		// Reset state if the viewport grows back to the desktop layout.
+		window
+			.matchMedia("(min-width: 621px)")
+			.addEventListener("change", (e) => {
+				if (e.matches) setOpen(false);
+			});
+	}
+</script>

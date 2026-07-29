@@ -1,0 +1,110 @@
+---
+import Base from "../layouts/Base.astro";
+
+const faqs = [
+	{
+		q: "Is my donation tax-deductible?",
+		a: "Yes. Every donation is processed by Every.org, a registered 501(c)(3) nonprofit, and is tax-deductible to the fullest extent allowed by law. You'll receive a receipt by email the moment your gift clears.",
+	},
+	{
+		q: "Can I choose which org gets my money?",
+		a: "Not through the pooled donation — the whole point is that we allocate across the full slate on your behalf, and we publish every allocation. If you'd rather give to a single organization, each one's page has a “Donate directly” link to its own Every.org profile.",
+	},
+	{
+		q: "What's your fee?",
+		a: "Zero. The Curb Fund takes no salary and no cut. The only deduction is Every.org's standard payment-processing fee; every remaining dollar is disbursed to the organizations. See our Transparency page for the full breakdown.",
+	},
+	{
+		q: "How do I cancel a monthly donation?",
+		a: "Recurring gifts are managed by Every.org, not us. Log in to your Every.org account, open your recurring donations, and cancel in a click — no email to anyone required.",
+	},
+	{
+		q: "What if an org loses your confidence?",
+		a: "Our slate isn't permanent. If an organization's finances, leadership, or impact deteriorate, we remove it at the next review and redirect its share to the others — and we explain the change in our transparency report.",
+	},
+];
+---
+
+<Base
+	title="FAQ — The Curb Fund"
+	description="Frequently asked questions about The Curb Fund: tax-deductibility, fees, choosing organizations, and cancelling a recurring gift."
+>
+	<main id="main">
+		<!-- HERO ---------------------------------------------------------- -->
+		<section class="page-hero" style='border-bottom: 0; padding-bottom: 0;'>
+			<div class="container">
+				<p class="eyebrow">Before you give</p>
+				<h1 class="page-hero__title">Frequently asked questions</h1>
+			</div>
+		</section>
+
+		<!-- FAQ ----------------------------------------------------------- -->
+		<section class="section">
+			<div class="container">
+				<div class="faq">
+					{
+						faqs.map((item) => (
+							<details class="faq__item">
+								<summary class="faq__q">{item.q}</summary>
+								<p class="faq__a">{item.a}</p>
+							</details>
+						))
+					}
+				</div>
+
+				<p class="faq__more">
+					<a class="text-link" href="/transparency">
+						See exactly how we allocate{" "}
+						<span aria-hidden="true">→</span>
+					</a>
+				</p>
+			</div>
+		</section>
+	</main>
+</Base>
+
+<style>
+	.faq {
+		max-width: 68ch;
+		border-top: 1px solid var(--color-line);
+	}
+
+	.faq__item {
+		border-bottom: 1px solid var(--color-line);
+	}
+
+	.faq__q {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 1rem;
+		padding: 1.1rem 0;
+		font-weight: 600;
+		cursor: pointer;
+		list-style: none;
+	}
+
+	/* hide the default disclosure triangle, draw our own +/- */
+	.faq__q::-webkit-details-marker {
+		display: none;
+	}
+	.faq__q::after {
+		content: "+";
+		font-size: 1.4rem;
+		font-weight: 400;
+		color: var(--color-accent);
+	}
+	.faq__item[open] .faq__q::after {
+		content: "\2212"; /* minus */
+	}
+
+	.faq__a {
+		margin: 0 0 1.2rem;
+		max-width: 64ch;
+		color: var(--color-muted);
+	}
+
+	.faq__more {
+		margin-top: 2.5rem;
+	}
+</style>

@@ -1,0 +1,240 @@
+---
+import Base from "../layouts/Base.astro";
+
+// Placeholder report — update once a disbursement cycle closes.
+const report = {
+	period: "2026",
+	received: "TBD",
+	distributed: "TBD",
+	allocations: [
+		{ org: "Rail Passengers Association", pct: "TBD", amount: "TBD", date: "TBD" },
+		{ org: "Strong Towns", pct: "TBD", amount: "TBD", date: "TBD" },
+		{ org: "Transportation Alternatives", pct: "TBD", amount: "TBD", date: "TBD" },
+		{ org: "Yes In My Back Yard (YIMBY Action)", pct: "TBD", amount: "TBD", date: "TBD" },
+	],
+};
+---
+
+<Base
+	title="Transparency — The Curb Fund"
+	description="The Curb Fund publishes its full allocation methodology and disbursement records every quarter. Total received, total distributed, and where every dollar went."
+>
+	<main id="main">
+		<!-- HERO ---------------------------------------------------------- -->
+		<section class="page-hero">
+			<div class="container">
+				<p class="eyebrow">No black boxes</p>
+				<h1 class="page-hero__title">Transparency</h1>
+				<p class="lead">
+					We publish our full allocation methodology and disbursement
+					records.
+				</p>
+			</div>
+		</section>
+
+		<!-- QUARTERLY REPORT ---------------------------------------------- -->
+		<section class="section">
+			<div class="container">
+				<div class="report__head">
+					<h2 class="section__label">{report.period} report</h2>
+					<p class="report__status">Provisional — awaiting initial disbursement</p>
+				</div>
+
+				<dl class="stats">
+					<div class="stat">
+						<dt>Total donations received</dt>
+						<dd>{report.received}</dd>
+					</div>
+					<div class="stat">
+						<dt>Total distributed</dt>
+						<dd>{report.distributed}</dd>
+					</div>
+				</dl>
+
+				<div class="table-wrap">
+					<table class="alloc">
+						<caption class="alloc__caption">
+							{report.period} allocation coming soon.
+						</caption>
+						<thead>
+							<tr>
+								<th scope="col">Organization</th>
+								<th scope="col">Allocation</th>
+								<th scope="col">Amount</th>
+								<th scope="col">Disbursed</th>
+							</tr>
+						</thead>
+						<tbody>
+							{
+								report.allocations.map((row) => (
+									<tr>
+										<th scope="row">{row.org}</th>
+										<td>{row.pct}</td>
+										<td>{row.amount}</td>
+										<td>{row.date}</td>
+									</tr>
+								))
+							}
+						</tbody>
+					</table>
+				</div>
+
+				<!-- <div class="prose report__notes">
+					<h3>Methodology notes</h3>
+					<p>
+						Each quarter we start from an equal baseline across the slate,
+						then adjust for three things: how much marginal impact another
+						dollar is likely to have at each organization right now, any
+						time-sensitive campaign or legislative window, and the local
+						match for donors' regions. We document every adjustment here so
+						the split is reproducible from the reasoning, not just asserted.
+					</p>
+					<p>
+						When this report is finalized, this section will explain the
+						specific calls behind the numbers above — why one organization
+						received more than another, and what changed since last quarter.
+					</p>
+				</div> -->
+
+				<!-- <p class="report__notify">
+					Want to be notified when we publish new reports?{" "}
+					<a
+						class="text-link"
+						href="mailto:hello@thecurbfund.org?subject=Notify%20me%20about%20new%20transparency%20reports"
+						>Email us to get on the list <span aria-hidden="true">→</span></a
+					>
+				</p> -->
+			</div>
+		</section>
+
+		<!-- WHAT WE DON'T TAKE -------------------------------------------- -->
+		<section class="section section--tight section--divide">
+			<div class="container prose">
+				<h2 class="section__label">What we don't take</h2>
+				<p>
+					<strong>We take $0.</strong> No salary, no honorarium,
+					no expense reimbursement, no cut of any kind. The Curb Fund is not
+					a source of income for anyone who runs it.
+				</p>
+				<p>
+					<strong>Every.org retains its standard processing fee.</strong>
+					{" "}As our fiscal sponsor, Every.org deducts only its standard
+					payment-processing fee before funds reach the pool — the same fee
+					that applies to any donation on their platform.{" "}
+					<a
+						class="text-link"
+						href="https://support.every.org/hc/en-us/articles/360058165794-How-is-Every-org-funded-"
+						target="_blank"
+						rel="noopener">See Every.org's fee policy ↗</a
+					>
+				</p>
+				<p>
+					<strong>Nothing else is deducted.</strong> Beyond that single
+					processing fee, every remaining dollar is disbursed to the
+					organizations. There are no management fees, no overhead skim, and
+					no hidden costs.
+				</p>
+			</div>
+		</section>
+	</main>
+</Base>
+
+<style>
+	/* ---- Report header ---------------------------------------------------- */
+	.report__head {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: baseline;
+		gap: 0.75rem 1.25rem;
+	}
+
+	.report__status {
+		font-size: var(--text-sm);
+		font-weight: 600;
+		letter-spacing: var(--tracking-wide);
+		text-transform: uppercase;
+		color: var(--color-muted);
+		padding: 0.28em 0.7em;
+		border: 1px solid var(--color-line);
+		border-radius: var(--radius-pill);
+	}
+
+	/* ---- Stats ------------------------------------------------------------ */
+	.stats {
+		display: grid;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: 1rem;
+		margin: 2rem 0;
+	}
+
+	.stat {
+		padding: 1.5rem;
+		background: var(--color-accent-tint);
+		border-radius: var(--radius);
+	}
+
+	.stat dt {
+		font-size: var(--text-sm);
+		color: var(--color-muted);
+	}
+
+	.stat dd {
+		margin: 0.35rem 0 0;
+		font-family: var(--font-serif);
+		font-size: var(--text-2xl);
+		color: var(--color-accent-strong);
+	}
+
+	/* ---- Allocation table ------------------------------------------------- */
+	.table-wrap {
+		overflow-x: auto;
+		margin: 2rem 0;
+	}
+
+	.alloc {
+		width: 100%;
+		border-collapse: collapse;
+		font-size: var(--text-base);
+	}
+
+	.alloc__caption {
+		caption-side: bottom;
+		margin-top: 0.85rem;
+		font-size: var(--text-sm);
+		color: var(--color-muted);
+		text-align: left;
+	}
+
+	.alloc th,
+	.alloc td {
+		padding: 0.85rem 1rem;
+		text-align: left;
+		border-bottom: 1px solid var(--color-line);
+	}
+
+	.alloc thead th {
+		font-size: var(--text-sm);
+		letter-spacing: var(--tracking-wide);
+		text-transform: uppercase;
+		color: var(--color-muted);
+	}
+
+	.alloc tbody th {
+		font-weight: 600;
+	}
+
+	.report__notes {
+		margin-top: 2.5rem;
+	}
+
+	.report__notify {
+		margin-top: 2.5rem;
+		max-width: 64ch;
+	}
+
+	@media (max-width: 480px) {
+		.stats {
+			grid-template-columns: 1fr;
+		}
+	}
+</style>

@@ -70,7 +70,7 @@ const orgs = [
 				<ul class="org-list" role="list">
 					{
 						orgs.map((org) => (
-							<li>
+							<li id={org.name}>
 								<article class="org-detail">
 									<header class="org-detail__head">
 										<h2 class="org-detail__name">{org.name}</h2>

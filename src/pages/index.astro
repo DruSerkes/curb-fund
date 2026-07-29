@@ -86,7 +86,7 @@ const steps = [
 					{
 						orgs.map((org) => (
 							<li>
-								<a class="org-card" href="/organizations">
+								<a class="org-card" href={`/organizations#${org.name}`}>
 									<h3 class="org-card__name">{org.name}</h3>
 									<p class="org-card__blurb">{org.blurb}</p>
 									<span

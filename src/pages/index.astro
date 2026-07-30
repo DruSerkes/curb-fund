@@ -68,7 +68,7 @@ const steps = [
           <!-- Equitably. Transparently. Quarterly. -->
 				</p>
 				<div class="hero__ctas">
-					<a class="btn btn--give" href="#donate">Give monthly</a>
+					<a class="btn btn--give" href="#donate">Donate now</a>
 					<!-- <a class="btn btn--ghost" href="/how-it-works"
 						>See how it works</a
 					> -->
@@ -106,7 +106,7 @@ const steps = [
 		</section>
 
 		<!-- 3. HOW IT WORKS (abbreviated) ------------------------------- -->
-		<section class="section how" aria-labelledby="how-heading">
+		<!-- <section class="section how" aria-labelledby="how-heading">
 			<div class="container">
 				<h2 id="how-heading" class="section__label">How it works</h2>
 				<ol class="how__steps" role="list">
@@ -118,10 +118,34 @@ const steps = [
 							</li>
 						))
 					}
-				</ol>
+				</ol> -->
 				<!-- <a class="text-link" href="/how-it-works"
 					>Learn how it works <span aria-hidden="true">→</span></a
 				> -->
+			<!-- </div>
+		</section> -->
+
+		<!-- 3.5 WHY THE CURB FUND --------------------------------------- -->
+		<section class="section why" aria-labelledby="why-heading">
+			<div class="container why__inner">
+				<h2 id="why-heading" class="section__label">Why The Curb Fund</h2>
+				<p class="why__lead lead">
+					Most of us want our neighborhoods to be safer, healthier, and
+					more prosperous, but almost nobody has the time or energy to
+					figure out which civic organizations are actually moving the
+					needle.
+				</p>
+				<p>
+					We do. This is the stuff we care about, and we've spent years
+					following the groups doing the real work on transit, housing, and
+					how our cities get built. So we made it simple: we pick a handful
+					worth backing, give you just the highlights, and create a way to 
+          contribute to them all at once through a fundraiser on every.org
+				</p>
+				<p>
+					You don't have to become an expert. 
+          You just have to care
+				</p>
 			</div>
 		</section>
 
@@ -358,6 +382,22 @@ const steps = [
 	}
 	.text-link:hover {
 		text-decoration: underline;
+	}
+
+	/* ---- Why The Curb Fund ------------------------------------------------ */
+	.why {
+		border-top: 1px solid var(--color-line);
+	}
+
+	.why__inner p {
+		max-width: 60ch;
+	}
+	.why__inner p + p {
+		margin-top: 1.1rem;
+	}
+
+	.why__lead {
+		color: var(--color-ink);
 	}
 
 	/* ---- Donate ----------------------------------------------------------- */

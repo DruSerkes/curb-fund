@@ -23,6 +23,27 @@ const navLinks = [
 // "/organizations" or "/organizations/".
 const normalize = (p: string) => p.replace(/\/+$/, "") || "/";
 const currentPath = normalize(Astro.url.pathname);
+
+// Absolute URLs for canonical + social cards. `Astro.site` is set in
+// astro.config.mjs (https://thecurbfund.org), so these resolve to the
+// canonical domain regardless of which host actually serves the page.
+const siteName = "The Curb Fund";
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+const ogImage = new URL("/og-image.png", Astro.site);
+
+// Organization structured data (schema.org) for rich Google results / knowledge
+// panel. NGO is the nonprofit subtype of Organization.
+const orgSchema = {
+	"@context": "https://schema.org",
+	"@type": "NGO",
+	name: siteName,
+	url: new URL("/", Astro.site).href,
+	logo: new URL("/curb-fund-logo.png", Astro.site).href,
+	image: ogImage.href,
+	description:
+		"The Curb Fund pools donations and distributes them across vetted urbanist organizations working on better transit, human-scale urbanism, parking reform, and housing — transparently.",
+	sameAs: ["https://www.every.org/the-curb-fund"],
+};
 ---
 
 <!doctype html>
@@ -38,6 +59,37 @@ const currentPath = normalize(Astro.url.pathname);
 
 		<title>{title}</title>
 		<meta name="description" content={description} />
+		<link rel="canonical" href={canonicalURL} />
+		<meta name="theme-color" content="#faf8f3" />
+		<meta name="color-scheme" content="light" />
+
+		<!-- Open Graph (Facebook, LinkedIn, iMessage, Slack, etc.) -->
+		<meta property="og:type" content="website" />
+		<meta property="og:site_name" content={siteName} />
+		<meta property="og:title" content={title} />
+		<meta property="og:description" content={description} />
+		<meta property="og:url" content={canonicalURL} />
+		<meta property="og:image" content={ogImage} />
+		<meta property="og:image:width" content="1200" />
+		<meta property="og:image:height" content="630" />
+		<meta
+			property="og:image:alt"
+			content="The Curb Fund — collective giving for better cities"
+		/>
+		<meta property="og:locale" content="en_US" />
+
+		<!-- X / Twitter card -->
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:title" content={title} />
+		<meta name="twitter:description" content={description} />
+		<meta name="twitter:image" content={ogImage} />
+		<meta
+			name="twitter:image:alt"
+			content="The Curb Fund — collective giving for better cities"
+		/>
+
+		<!-- Organization structured data -->
+		<script type="application/ld+json" set:html={JSON.stringify(orgSchema)} />
 
 		<!-- Fonts: DM Serif Display (headings) + DM Sans (body) -->
 		<link rel="preconnect" href="https://fonts.googleapis.com" />

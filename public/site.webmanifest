@@ -1,19 +1,26 @@
 {
-  "name": "",
-  "short_name": "",
+  "name": "The Curb Fund",
+  "short_name": "Curb Fund",
+  "description": "Donate once. The Curb Fund distributes your gift across vetted organizations fighting for better transit, human-scale urbanism, parking reform, and housing — transparently.",
+  "lang": "en-US",
+  "id": "/",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "theme_color": "#faf8f3",
+  "background_color": "#faf8f3",
   "icons": [
     {
       "src": "/android-chrome-192x192.png",
       "sizes": "192x192",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any"
     },
     {
       "src": "/android-chrome-512x512.png",
       "sizes": "512x512",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any"
     }
-  ],
-  "theme_color": "#ffffff",
-  "background_color": "#ffffff",
-  "display": "standalone"
+  ]
 }

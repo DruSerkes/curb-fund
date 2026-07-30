@@ -9,6 +9,8 @@ const orgs = [
 		local: false,
 		website: "https://www.railpassengers.org",
 		slug: "rail-passengers-association",
+		cnScore: "89%",
+		cnUrl: "https://www.charitynavigator.org/ein/362615221",
 		description:
 			"The Rail Passengers Association is the largest national organization advocating for train riders in the United States. Founded in 1967, it represents the interests of the more than 40 million people who ride America's trains by lobbying Congress, mobilizing riders, and defending Amtrak's national network from the recurring threat of cuts.",
 		why: "Passenger rail lives or dies by federal appropriations, and RPA is the only organized national constituency fighting for it year after year. Their work is unglamorous, legislative, and hard to fund through membership dues alone. This is the kind of durable advocacy that struggles to attract attention but moves the outcome.",
@@ -19,6 +21,8 @@ const orgs = [
 		local: false,
 		website: "https://www.strongtowns.org",
 		slug: "strong-towns",
+		cnScore: "84%",
+		cnUrl: "https://www.charitynavigator.org/ein/271459378",
 		description:
 			"Strong Towns is both a movement and a media organization arguing that American cities are financially insolvent because of how we've chosen to build them. Through writing, podcasts, and a national network of local advocates, they make the case for incremental, human-scale development that towns can actually afford to maintain.",
 		why: "Strong Towns reframes the urbanist argument in fiscal terms that resonate across the political spectrum, reaching audiences other advocates can't. They've built a genuine grassroots movement rather than just a policy shop, and movements compound.",
@@ -29,6 +33,8 @@ const orgs = [
 		local: true,
 		website: "https://transalt.org",
 		slug: "transportation-alternatives",
+		cnScore: "97%",
+		cnUrl: "https://www.charitynavigator.org/ein/510186015",
 		description:
 			"Transportation Alternatives has spent five decades reclaiming New York City's streets from the automobile. They campaign for protected bike lanes, safer crossings, better transit, and car-free public space. Their grassroots organizing has reshaped how the largest city in the country moves.",
 		why: "TA turns advocacy into concrete wins: miles of protected lanes, redesigned intersections, and landmark street-safety legislation. As our local match for the New York region, they demonstrate what sustained pressure on city government can actually achieve.",
@@ -39,6 +45,8 @@ const orgs = [
 		local: true,
 		website: "https://yimbyaction.org",
 		slug: "yes-in-my-back-yard",
+		cnScore: "88%",
+		cnUrl: "https://www.charitynavigator.org/ein/320610451",
 		description:
 			"YIMBY Action is a national network of local chapters fighting to legalize abundant, affordable housing. Through its 501(c)(3), Yes In My Back Yard, it trains and mobilizes volunteers to show up where housing actually gets decided - city councils, planning commissions, and statehouses - and say yes.",
 		why: "The housing shortage is downstream of thousands of local land-use fights, and YIMBY Action is one of the few groups organizing ordinary residents to win them. Pro-housing voices are chronically outnumbered in those rooms; this is where funding moves the margin.",
@@ -91,14 +99,14 @@ const orgs = [
 
 									<div class="org-detail__actions">
 										<a
-											class="btn btn--give"
-											href={`https://www.every.org/${org.slug}#/donate`}
+											class="text-link text-link--left"
+											href={org.cnUrl}
 											target="_blank"
 											rel="noopener"
 										>
-											Donate directly <span aria-hidden="true">→</span>
+											{org.cnScore} on Charity Navigator
 										</a>
-										<a
+                    <a
 											class="text-link"
 											href={org.website}
 											target="_blank"
@@ -106,6 +114,14 @@ const orgs = [
 										>
 											Visit website{" "}
 											<span aria-hidden="true">↗</span>
+										</a>
+										<a
+											class="btn btn--give"
+											href={`https://www.every.org/${org.slug}#/donate`}
+											target="_blank"
+											rel="noopener"
+										>
+											Donate directly <span aria-hidden="true">→</span>
 										</a>
 									</div>
 								</article>
@@ -198,6 +214,10 @@ const orgs = [
 		margin-top: 1.5rem;
 	}
 
+  .text-link--left {
+    margin-right: auto;
+  }
+
 	@media (max-width: 480px) {
 		.org-detail__head {
 			flex-direction: column;
@@ -207,5 +227,9 @@ const orgs = [
 		.org-detail__actions {
 			justify-content: center;
 		}
+
+    .text-link--left {
+      margin-right: 0;
+    }
 	}
 </style>

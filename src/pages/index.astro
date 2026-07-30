@@ -47,7 +47,7 @@ const steps = [
 ---
 
 <Base
-	title="The Curb Fund — fund the movement for better cities"
+	title="The Curb Fund — Fund the movement for better cities"
 	description="Donate once. The Curb Fund distributes your contribution across the organizations fighting for better transit, human-scale urbanism, and parking reform — equitably, transparently, quarterly."
 >
 	<main id="main">
@@ -69,9 +69,9 @@ const steps = [
 				</p>
 				<div class="hero__ctas">
 					<a class="btn btn--give" href="#donate">Give monthly</a>
-					<a class="btn btn--ghost" href="/how-it-works"
+					<!-- <a class="btn btn--ghost" href="/how-it-works"
 						>See how it works</a
-					>
+					> -->
 				</div>
 			</div>
 		</section>
@@ -214,7 +214,24 @@ const steps = [
 	/* ---- Hero ------------------------------------------------------------- */
 	.hero {
 		padding-top: clamp(3rem, 9vw, 6.5rem);
+		/* overflow: hidden; */
 	}
+
+	/* Decorative logo, offset to the right of the hero text. Desktop only —
+	   below 900px there isn't room beside the text, so it's omitted.
+	   image-set() serves WebP where supported and falls back to PNG. */
+	/* @media (min-width: 900px) {
+		.hero {
+			background-image: url("/curb-fund-logo.png");
+			background-image: image-set(
+				url("/curb-fund-logo.webp") type("image/webp"),
+				url("/curb-fund-logo.png") type("image/png")
+			);
+			background-repeat: no-repeat;
+			background-position: right clamp(1.5rem, 5vw, 4rem) center;
+			background-size: min(36%, 400px) auto;
+		}
+	} */
 
 	.hero__headline {
 		margin-block: 0.5rem 1.25rem;
